@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{Layouts/user-main.html}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thanh Toán</title>
+    
+    <link rel="stylesheet" th:href="@{/assets/css/base.css}" type="text/css">
+    <link
+            rel="stylesheet"
+            data-purpose="Layout StyleSheet"
+            title="Web Awesome"
+            href="/css/app-wa-462d1fe84b879d730fe2180b0e0354e0.css?vsn=d"
+    >
+
+    <link
+            rel="stylesheet"
+            href="https://site-assets.fontawesome.com/releases/v5.15.4/css/all.css"
+    >
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    
+    
+    <style>
+    
+    .checkout-container {
+            width: 70%;
+            margin: 50px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+       }
+       
+   .mycart-title {
+           font-size: 30px;                                  
+	    font-weight: bold;
+	    margin-bottom: 30px;
+     }
+     .mycart-table {
+         width: 100%;
+         border-collapse: collapse;
+     }
+     .mycart-table th, .mycart-table td {
+         text-align: center;
+         padding: 15px;
+         border-bottom: 1px solid #ddd;
+     }
+     .mycart-table th {
+         background-color: #f2f2f2;
+         font-weight: bold;
+     }
+     .mycart-item-info {
+         display: flex;
+         align-items: center;
+         justify-content: flex-start;
+         gap: 10px;
+     }
+     .mycart-item-info img {
+        width: 100px; /* Tăng kích thước ảnh sản phẩm */
+	    height: 100px;
+	    border-radius: 8px;
+	    object-fit: cover;
+      }
+      
+    .mycart-item-info h3 {
+	    font-size: 20px; /* Tăng cỡ chữ tên sản phẩm */
+	    margin: 5px 0;
+	}
+	
+	.mycart-item-info span {
+	    font-size: 16px; /* Kích thước chữ cho thông tin thêm */
+	    color: #757575;
+	}
+      
+      .mycart-actions {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 5px;
+      }
+      .mycart-actions input {
+          width: 40px;
+          text-align: center;
+      }
+      .mycart-btn {
+          background-color: black;
+          color: white;
+          border: none;
+          padding: 5px 10px;
+          border-radius: 5px;
+          cursor: pointer;
+      }
+      .mycart-btn:hover {
+          background-color: blue;
+      }
+	
+	.delivery-info {
+	    width: 100%;
+	    margin: 0 auto;
+	    font-family: Arial, sans-serif;
+	}
+	
+	.dashed-border {
+	    border-top: 2px dashed #ddd;
+	    height: 2px;
+	    margin-bottom: 10px;
+	}
+	
+	
+	.header-row {
+	    display: flex;
+	    align-items: center;
+	    margin-bottom: 10px;
+	}
+	
+	.location-icon {
+	    width: 24px;
+	    height: 24px;
+	    margin-right: 8px;
+	}
+	
+	.info-title {
+	    font-weight: bold;
+	    color: black; 
+	    font-size: 25px;
+	}
+	
+	.user-details {
+	    margin-top: 10px;
+	    display: flex;
+	    flex-direction: column;
+	    gap: 5px;
+	}
+	
+	.user-info {
+	    font-size: 15px;
+	    font-weight: bold;
+	}
+	
+	.user-address {
+	    font-size: 15px;
+	}
+	
+	.change-btn {
+	    align-self: flex-start;
+	    font-size: 12px;
+	    background-color: transparent;
+	    border: none;
+	    margin-right: 20px;
+	    color: #007bff;
+	    cursor: pointer;
+	    padding: 20px;
+	}
+	
+	
+	.store-logo {
+	    height: 40px;
+	    margin-right: 10px;
+	}
+	
+	.delivery-info, .product-list, .summary {
+	    background-color: #fff;
+	    margin: 20px;
+	    padding: 15px;
+	    border-radius: 8px;
+	    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	    font-size: 15px;
+	}
+	
+	.product-item {
+	    display: flex;
+	    align-items: center;
+	    border-bottom: 1px solid #ddd;
+	    padding: 10px 0;
+	}
+	
+	.product-image {
+	    width: 100px;
+	    margin-right: 15px;
+	}
+	
+	.product-details {
+	    flex-grow: 1;
+	}
+	
+	.badge {
+	    background-color: #f5222d;
+	    color: #fff;
+	    padding: 2px 8px;
+	    border-radius: 4px;
+	    font-size: 12px;
+	}
+	
+	.product-price {
+	    text-align: right;
+	}
+	
+	.summary-row {
+	    display: flex;
+	    justify-content: space-between;
+	    margin: 10px 0;
+	}
+	
+	.total span {
+	    font-weight: bold;
+	    color: #f5222d;
+	}
+	
+	footer {
+	    text-align: center;
+	    padding: 15px;
+	}
+	
+	button {
+	    background-color: #ff4d4f;
+	    color: #fff;
+	    border: none;
+	    padding: 10px 20px;
+	    border-radius: 4px;
+	    cursor: pointer;
+	    font-size: 18px; /* Cỡ chữ của bảng */
+	}
+	
+	button:hover {
+	    background-color: #ff7875;
+	}
+	
+	table {
+	    width: 100%;
+	    margin-top: 20px;
+	}
+	
+	input[type="number"] {
+	    text-align: center;
+	}
+
+    .special-header {
+	    display: flex;
+	    align-items: center;
+	}
+	
+	.special-logo {
+	    margin-right: -230px; /* Giảm khoảng cách giữa hình ảnh và đường gạch */
+	}
+	
+	.special-header h1::before {
+	    content: "|"; /* Đường gạch trước chữ Thanh Toán */
+	    margin-right: 5px; /* Giảm khoảng cách giữa đường gạch và chữ */
+	}
+
+	.mycart-table th, 
+	.mycart-table td {
+	    font-size: 15px; /* Cỡ chữ của bảng */
+	    padding: 20px; /* Tăng khoảng cách giữa các ô */
+	}
+	
+	.mycart-actions input {
+	    font-size: 15px; /* Cỡ chữ ô số lượng */
+	    width: 50px; /* Tăng chiều rộng ô nhập */
+	}
+    	
+    
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    
+</head>
+<body>
+<section layout:fragment="content">
+	<div class="checkout-container">
+	
+	    <header class="special-header">
+		    <img th:src="@{/images/logoAppleWorld.png}" alt="Apple Store" class="special-logo">
+		    <h1>Thanh Toán</h1>
+		</header>
+	
+	
+	    <div class="delivery-info">
+		    <div class="dashed-border"></div> <!-- Viền gạch gạch -->
+		    <div class="header-row">
+		        <i class="bi bi-geo-alt-fill" style="font-size: 24px; margin-right: 8px;"></i>
+		        <span class="info-title">Địa Chỉ Nhận Hàng</span>
+		    </div>
+		
+		    <div class="user-details">
+		        <div class="user-info">
+		            <span th:text="${customerDto.name}">Nguyễn Văn Vũ</span>
+		            <span>(+84) <span th:text="${customerDto.phone}"></span></span>
+		        </div>
+		        <div class="user-address">	            	            	            
+	            	<span th:text="${customerDto.address_line}"></span>, 
+	            	<span th:text="${customerDto.city}"></span>,
+	            	<span th:text="${customerDto.country}"></span>	            
+		                     	
+		        	<button class="change-btn">Thay Đổi</button>
+		        </div>
+		    </div>
+		</div>
+		
+		<form th:action="@{/user/shopping-cart/checkout/save}" method="post" style="display:inline;">
+		    <table class="mycart-table">
+		            <thead>
+		                <tr>                 
+		                    <th>Sản Phẩm</th>
+		                    <th>Đơn Giá</th>
+		                    <th>Số Lượng</th>
+		                    <th>Thành Tiền</th>	                    
+		                </tr>
+		            </thead>
+		            <tbody id="cart-body">
+		                <!-- Lặp qua các sản phẩm trong giỏ hàng -->
+		                <tr th:each="item : ${cartItems}" th:data-price="${item.product.price}">
+		                    
+		                    <td>
+		                        <div class="mycart-item-info">
+		                        	
+			                            <img th:src="'data:image/jpeg;base64,' + ${item.product.getImg()}" alt="Sản Phẩm"/>
+			                            <div>
+			                                <h2 class ="product-name" th:text="${item.product.name}"></h2>
+			                                <span th:text="'Màu: ' + ${item.product.color}" ></span><br>
+			                                
+			                                
+			                            </div>
+		                            
+		                        </div>
+		                    </td>
+		                    <td th:text="${item.product.price} + '₫'"></td>
+		                    <td>
+		                        <div class="mycart-actions">                           
+		                            <input type="number" th:value="${item.quantity}" min="1" readonly>                         
+		                        </div>
+		                    </td>
+		                    <td class="mycart-item-total" 
+		                        th:text="${item.product.price * item.quantity} + '₫'"></td>
+		                    <input type="hidden" name="cartItemIDs" th:value="${item.id}" />
+		                </tr>
+		            </tbody>
+			</table>
+		
+		    <section class="summary">
+		        <div class="summary-row total">
+		            <span>Tổng thanh toán</span>
+		            <span id="total-payment">₫0</span>
+		        </div>
+		    </section>
+		    <footer>
+		        <p>Nhấn "Đặt hàng" đồng nghĩa với việc bạn đồng ý tuân theo <a href="#">Điều khoản Apple Store</a></p>
+		        <button type="submit" id="checkout-button">Đặt hàng</button>
+		    </footer>
+	    </form>
+	    
+    </div>
+
+	
+    <script>
+	    document.addEventListener("DOMContentLoaded", function () {
+	        const cartBody = document.getElementById("cart-body");
+	        const totalPaymentElement = document.getElementById("total-payment");
+	
+	        let totalPayment = 0;
+	
+	        // Duyệt qua từng hàng và tính tổng thành tiền
+	        cartBody.querySelectorAll("tr").forEach(row => {
+	            const itemTotalElement = row.querySelector(".mycart-item-total");
+	            const itemTotal = parseFloat(itemTotalElement.textContent.replace(/[^\d.-]/g, ''));
+	
+	            totalPayment += itemTotal;
+	        });
+	
+	        // Hiển thị tổng thanh toán đã tính
+	        totalPaymentElement.textContent = new Intl.NumberFormat('vi-VN', {
+	            style: 'currency',
+	            currency: 'VND'
+	        }).format(totalPayment);
+	    });
+	</script>
+
+    
+</section>
+</body>
+</html>

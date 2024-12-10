@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+	<link rel="stylesheet" th:href="@{/assets/css/layout/header.css}" type="text/css">
+</head>
+<body>
+<div id="content__of__page">
+	<header>
+		<div id="header__outline">
+			<div th:replace= "~{Fragments/admin/header::header}"></div>
+		</div>
+		<section>
+			<div>
+				<div layout:fragment ="content"></div>
+			</div>
+		</section>
+		<div>
+			<div th:replace = "~{Fragments/admin/footer::footer}"></div>
+		</div>
+	</header>
+</div>
+
+
+<script th:src="@{/JS/header.js}"></script>
+</body>
+</html>

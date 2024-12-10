@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{Layouts/user-main.html}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lịch sử mua hàng</title>
+    
+	
+    <link rel="stylesheet" th:href="@{/assets/css/user/purchase_history.css}" type="text/css">
+</head>
+<body>
+<section layout:fragment="content">
+
+	<div id="toast" class="toast" style="display: none;">
+				    <span th:text="${message}"></span>
+	</div>
+	
+    <div class="wrap-tools">
+        <div class="funtionsBar">
+            <form th:action="@{/user/purchase_history}" method="get" id="sort-form">
+                <div class="sort">
+                    <label for="Time">Sắp xếp theo:</label>
+                    <select id="Time" name="Time" onchange="submitSortForm()">
+                        <option value="">Chọn</option>
+                        <option value="newest">Mới nhất</option>
+                        <option value="oldest">Cũ nhất</option>
+                    </select>
+                </div>
+            </form>
+
+            <form th:action="@{/user/purchase_history}" method="get">
+                <div class="filterStatus">
+                    <label for="Status">Lọc theo trạng thái:</label>
+                    <select id="Status" name="Status">
+                        <option value="">Tất cả</option>
+                        <option value="Chờ xét duyệt">Chờ xét duyệt</option>
+                        <option value="Đã xét duyệt">Đã xét duyệt</option>
+                        <option value="Đã giao hàng">Đã giao hàng</option>
+                        <option value="Đơn hàng bị hủy">Đơn hàng bị hủy</option>
+                    </select>
+                    <button class="filterStatusBtn" type="submit">
+                        <i class="fas fa-filter"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="wrap">
+        <div class="order-container">
+            <div class="order-header">
+                <h1>Danh sách đơn hàng</h1>
+            </div>
+
+            <div class="order-list">
+                <div th:each="DetailOrder : ${listDetailOrder}" class="order-item">
+                    <img th:src="'data:image/jpeg;base64,' + ${DetailOrder.getImg()}" alt="Sản phẩm" class="product-img">
+                    <div class="order-details">
+                        <h2>Đơn hàng #<span th:text="${DetailOrder.getOrder_id()}"></span></h2>
+                        <p><strong>Sản phẩm: </strong><span th:text="${DetailOrder.getProduct_name()}" class="Product_name"></span></p>
+                        <p><strong>Màu sắc: </strong><span th:text="${DetailOrder.getProduct_color()}"></span></p>
+                        <p><strong>Giá: </strong><span th:text="${DetailOrder.getPrice()}"></span> VND</p>
+                        <p><strong>Ngày mua: </strong><span th:text="${DetailOrder.getOrder_date()}"></span></p>
+                        <p><strong>Địa chỉ: </strong><span th:text="${DetailOrder.getAddress_line()}"></span></p>
+                        <p><strong>Trạng thái: </strong><span th:text="${DetailOrder.getStatus()}"></span></p>
+                        <div th:if="${DetailOrder.getNote() != null}">
+                            <p><strong>Lý do: </strong><span th:text="${DetailOrder.getNote()}"></span></p>
+                        </div>
+                        
+                        <input type="hidden" class="Product_id" th:value="${DetailOrder.getProduct_id()}">
+                        <input type="hidden" class="OrderItem_id" th:value="${DetailOrder.getOrder_id()}">
+                        <div th:if="${DetailOrder.getStatus() == 'Đã giao hàng' && DetailOrder.getRatingStatus() == 0}" style="margin-left: -158px;">
+                        	<button class="reviews-btn" onclick="openModal()">Đánh giá</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="order-footer">
+                <button onclick="goBack()" class="back-button">Quay lại</button>
+            </div>
+        </div>
+    </div>
+	
+	
+	
+	<!-- Modal đánh giá sản phẩm -->
+    <div class="modal" id="reviewModal">
+	    <div class="modal-content">
+	    	<form th:action="@{/user/purchase_history/rating}" method="post" >
+		        <div class="modal-header">
+		            Đánh Giá Sản Phẩm
+		        </div>
+			
+		        <div class="product-info">
+		            <img id="productImg" src="https://via.placeholder.com/80" alt="Sản phẩm">
+		            <div class="product-details">
+		                <h3 id="Product_name" class="Product_name"></h3>
+		                
+		            </div>
+		        </div>
+	        
+		        <div class="product-review">
+		            <p>Chất lượng sản phẩm</p>
+		            <div class="stars" id="starContainer">
+		                <span class="star" data-value="1">★</span>
+		                <span class="star" data-value="2">★</span>
+		                <span class="star" data-value="3">★</span>
+		                <span class="star" data-value="4">★</span>
+		                <span class="star" data-value="5">★</span>
+		            </div>
+		            <span id="ratingText" class="rating-text"></span>
+		        </div>
+			    <input type="hidden" id="ratingInput" name="rating" value="0" required>		    		    
+	        	<input type="hidden" id="productId" name="productId" value="">
+	        	<input type="hidden" id="orderItem_id" name="orderItem_id" value="">
+	        	
+		        <div class="textarea-container">
+		            <label for="flavor">Nhận xét:</label>
+		            <textarea id="flavor" name="review_text" placeholder="Để lại đánh giá..."></textarea>            
+		        </div>
+				
+		        <div class="modal-footer">
+		            <button type="reset" class="btn btn-back" onclick="closeModal()">Trở Lại</button>
+		            <button type="submit" class="btn btn-submit" onclick="validateRating(event)">Hoàn Thành</button>
+		        </div>
+			</form>
+	    </div>
+	</div>
+	
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	
+	
+    <script th:inline="javascript">
+    
+	    document.addEventListener("DOMContentLoaded", function() {
+	        const toast = document.getElementById("toast");
+	        
+	        // Kiểm tra nếu có thông báo từ model
+	        console.log("Message: ", toast.innerText.trim()); // Kiểm tra thông báo
+	        if (toast && toast.innerText.trim() !== "") {
+	            toast.style.display = "block"; // Hiển thị thông báo
+	            toast.classList.add("visible"); // Thêm lớp 'visible'
+	            
+	            // Ẩn thông báo sau 2 giây
+	            setTimeout(() => {
+	                toast.classList.remove("visible"); // Ẩn thông báo
+	                setTimeout(() => {
+	                    toast.style.display = "none"; // Ẩn hoàn toàn
+	                }, 500); // Thời gian ẩn hoàn toàn
+	            }, 2000); // Thời gian hiển thị (2000ms = 2 giây)
+	        }
+	        
+	        
+	        
+	    });
+    
+	       
+        function goBack() {
+            window.history.back();
+        }
+
+        function submitSortForm() {
+            document.getElementById('sort-form').submit();
+        }
+        
+        function validateRating(event) {
+            const ratingInput = document.getElementById('ratingInput');
+            if (ratingInput.value === "0") {
+                alert("Vui lòng chọn số sao để đánh giá sản phẩm!");
+                event.preventDefault(); // Ngăn form gửi đi
+            }
+        }
+
+                     
+        const stars = document.querySelectorAll('.star');
+        const ratingInput = document.getElementById('ratingInput'); // Input ẩn lưu số sao
+        const ratingText = document.getElementById('ratingText');
+
+        const ratingMessages = ["Tệ", "Không hài lòng", "Bình thường", "Hài lòng", "Tuyệt vời"];
+
+        stars.forEach(star => {
+            star.addEventListener('click', function () {
+                const rating = parseInt(this.getAttribute('data-value'));
+
+                // Xóa class 'selected' khỏi tất cả sao trước đó
+                stars.forEach(s => s.classList.remove('selected'));
+
+                // Đánh dấu các sao từ đầu đến sao được chọn
+                for (let i = 0; i < rating; i++) {
+                    stars[i].classList.add('selected');
+                }
+
+                // Cập nhật input ẩn với giá trị sao
+                ratingInput.value = rating;
+
+                // Hiển thị thông báo đánh giá
+                ratingText.textContent = ratingMessages[rating - 1];
+            });
+        });
+        
+        $(document).ready(function () {
+            $(".reviews-btn").click(function () {
+            	var parentCard = $(this).closest('.order-item');
+            	
+            	var OrderItem_id = parseInt(parentCard.find(".OrderItem_id").val(), 10);
+            	var Productid = parseInt(parentCard.find(".Product_id").val(), 10);
+                var Product_name = parentCard.find(".Product_name").text();
+                var imgSrc = parentCard.find(".product-img").attr("src");
+                console.log('Product Name:', Product_name);
+                console.log('Productid', Productid);
+
+                $("#orderItem_id").val(OrderItem_id);
+                $("#productId").val(Productid);
+                $("#Product_name").text(Product_name);
+                $("#productImg").attr("src", imgSrc);
+                                          
+            });
+
+            
+        });
+		
+        function openModal() {
+            document.getElementById('reviewModal').style.display = 'flex';
+        }
+
+        // Đóng modal
+        function closeModal() {
+            document.getElementById('reviewModal').style.display = 'none';
+        }
+        
+
+    </script>
+</section>
+</body>
+</html>

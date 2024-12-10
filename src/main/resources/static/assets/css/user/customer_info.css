@@ -1,0 +1,117 @@
+		.form-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-title {
+            text-align: center;
+            color: #333;
+        }
+        .info-form {
+            display: flex;
+            flex-direction: column;
+        }
+        .form-label {
+            margin-top: 10px;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        .form-input,
+        .form-textarea {
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .form-button {
+            padding: 10px 20px;
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .form-button:hover {
+            background-color: #5a6268;
+        }
+        
+        .error-text {
+            color: red;
+            font-size: 0.8em;
+            
+            margin-bottom: 20px;
+        }
+        
+        .wrap {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 20px 0px;
+            background-color: #fff;
+            justify-content: center;
+            position: relative;
+        }
+        .profile-card {
+            background-color: #fff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            width: 700px;
+            max-width: 90%;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .profile-header {
+            width: 100%;
+            background-color: #000;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #fff;
+        }
+        .profile-header img {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border: 5px solid #fff;
+            margin-bottom: 20px;
+        }
+        
+        .profile-header p {
+            font-size: 26px;
+            margin: 0 ;
+        }
+        .profile-body {
+            padding: 30px;
+            text-align: left;
+        }
+        
+        .profile-body p {
+            font-size: 20px;
+            color: #333;
+            margin: 10px 0;
+        }
+        .profile-footer {
+            width: 100%;
+            background-color: #f8f9fa;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+        .profile-footer button {
+            font-size: 20px;
+            color: #fff;
+            background-color: #6c757d;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .profile-footer button:hover {
+            background-color: #5a6268;
+        }

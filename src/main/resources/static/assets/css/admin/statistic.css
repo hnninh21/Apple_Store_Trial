@@ -1,0 +1,32 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    font-variation-settings: "slnt" 0;
+}
+
+html {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+body {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+}
+
+#statistic_Title {
+    background-color: #e6e6e6;
+    margin-top: 60px;
+}
+
+#content__Title {
+    padding: 40px 30px;
+    color: black;
+}

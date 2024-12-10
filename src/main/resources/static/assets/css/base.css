@@ -1,0 +1,33 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    line-height: 1.5;
+    text-decoration: none;
+
+}
+html {
+    font-size: 62.5%;
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    font-variation-settings:
+            "slnt" 0;
+    scroll-behavior: smooth
+}
+
+body {
+    font-size: 1.6rem;
+}
+input{
+    border-style: none;
+    outline: none;
+}
+.content{
+    min-height: 1000px;
+}
+p{
+    margin: 0;
+    padding: 0;
+}

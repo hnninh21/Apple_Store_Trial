@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en"
+		xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorate="~{Layouts/admin-main.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Xem tất cả sản phẩm</title>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" th:href="@{/assets/css/admin/view-all-product.css}" type="text/css">
+    <link
+            rel="stylesheet"
+            data-purpose="Layout StyleSheet"
+            title="Web Awesome"
+            href="/css/app-wa-462d1fe84b879d730fe2180b0e0354e0.css?vsn=d"
+    >
+
+    <link
+            rel="stylesheet"
+            href="https://site-assets.fontawesome.com/releases/v5.15.4/css/all.css"
+    >
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />-->
+</head>
+<body>
+<section layout:fragment="content">
+    <div class="container">
+        <div class="header">
+            <div class="listProductTitle">
+                <h1 style="font-size: 36px; font-weight: 500">Danh sách sản phẩm</h1>
+            </div>
+            <div class="funtionsBar">
+                <form th:action="@{/admin/viewAll}" method="get" id="sort-form">
+                    <div class="sort">
+                        <label class="sortLabel" for="comboBox">Sắp xếp theo</label>
+                        <select id="comboBox" name="price">
+                            <option value="">      Chọn</option>
+                            <option value="asc">Giá tăng dần</option>
+                            <option value="desc">Giá giảm dần</option>
+                        </select>
+                    </div>
+                </form>
+
+                <div class="filterColor">
+                    <form class="colorComboBoxForm" th:action="@{/admin/viewAll}" method="get">
+                        <label class="colorComboBoxLabel" th:for="options">Lọc theo màu</label>
+                        <select name="color" id="colorComboBox">
+                            <option value="">Chọn màu</option>
+                            <th:block th:each="color : ${listColor}" >
+                                <option th:value="${color}">[[${color}]]</option>
+                            </th:block>
+                        </select>
+                        <button class="filterColorBtn" type="submit"><i class="far fa-filter" style="font-size: 20px; color: white"></i></button>
+                    </form>
+                </div>
+
+                <form th:action="@{/admin/viewAll}" method="get" id="search-form">
+                    <div class="searchBox">
+                        <label>
+                            <input class="inputToSearch" name="search" type="text" placeholder="Tìm kiếm">
+                        </label>
+                        <i class="far fa-search" id="search-icon" style="font-size: 25px; color: #A9A9A9; cursor: pointer"></i>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="addNewDiv">
+            <div id="rollback-wrapper">
+                <a th:href="@{/admin/viewAll}" id="reload-form">
+                    <i class="far fa-sync-alt" id="reload-icon"></i>
+                </a>
+            </div>
+            <button class="addNewBtn" onclick="openEditModal(addNewFormWrapper)">
+                <i class="far fa-plus-circle" ></i>
+                <label class="addNewLabel">Thêm mới</label>
+            </button>
+        </div>
+
+        <div id="tableArea">
+            <div th:if="${listAllProduct.size() == 0}" id="wrapper__empty__list">
+                <h3 id="empty__list">Danh sách trống</h3>
+            </div>
+            <div class="tableWrapper" th:if="${listAllProduct.size() > 0}">
+                <table class="productTable">
+                    <tr class="table-header">
+                        <th>STT</th>
+                        <th>ID</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Mô tả</th>
+                        <th>Số lượng</th>
+                        <th>Giá</th>
+                        <th>Màu sắc</th>
+                        <th>Hình ảnh</th>
+                        <th>Thao tác</th>
+                    </tr>
+
+                    <th:block th:each="ProductDto : ${listAllProduct}">
+                        <tr id="productTr">
+                            <td class="stt-column"></td>
+                            <td>[[${ProductDto.getProduct_id}]]</td>
+                            <td>[[${ProductDto.getName}]]</td>
+                            <td id="descriptionTd">[[${ProductDto.getDescription}]]</td>
+                            <td>[[${ProductDto.getStock}]]</td>
+                            <td>[[${ProductDto.getPrice}]]</td>
+                            <td>[[${ProductDto.getColor}]]</td>
+                            <td>
+                                <img style="width: 100px" th:src="'data:image/jpeg;base64,' + ${ProductDto.getImg()}"/>
+                            </td>
+
+                            <td>
+                                <div class="handleWrapper">
+                                    <button class="editBtn" style="margin-right: 10px" onclick="openEditModal(editFormWrapper)"
+                                            th:data-id="${ProductDto.getProduct_id()}"
+                                            th:data-name="${ProductDto.getName()}"
+                                            th:data-des="${ProductDto.getDescription()}"
+                                            th:data-stock="${ProductDto.getStock()}"
+                                            th:data-price="${ProductDto.getPrice()}"
+                                            th:data-color="${ProductDto.getColor()}" >
+                                        <i class="far fa-pen-square" style="font-size: 30px; color: #ffffff"></i>
+                                    </button>
+                                    <button class="deleteBtn"
+                                            th:data-product_id="${ProductDto.getProduct_id()}"
+                                            onclick="openEditModal(confirmDialog)">
+                                        <i class="far fa-trash" style="font-size: 30px; color: #ffffff"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </th:block>
+                </table>
+            </div>
+        </div>
+
+
+
+        <!--        FORM TO EDIT PRODUCT                 -->
+        <div class="back-ground-wrapper">
+            <div id="edit-form-wrapper">
+                <form class="container" id="editForm" th:action="@{/admin/update}" method="post">
+                    <h3 class="header-form">Chỉnh sửa thông tin sản phẩm</h3>
+                    <div id="wrapper">
+                        <div class="input-price">
+                            <span class="input-group-text" id="addon-wrapping-1" style="margin-bottom: 5px">Tên sản phẩm:</span>
+                            <input type="text" name="name" id="edit__name" class="form-control" aria-label="Username" aria-describedby="addon-wrapping" minlength="7" required="required">
+                            <p id="empty__edit__name" class="check__empty">Vui lòng nhập tên sản phẩm</p>
+                            <input type="text" name="id"  hidden="hidden">
+                        </div>
+
+                        <div class="input-price">
+                            <span class="input-group-text" id="addon-wrapping-2" style="margin-bottom: 5px">Giá:</span>
+                            <input type="number" name="price" id="edit__price" class="form-control" aria-label="Username" aria-describedby="addon-wrapping" minlength="7" required="required">
+                            <p id="empty__edit__price" class="check__empty">Vui lòng nhập giá sản phẩm</p>
+                        </div>
+
+                        <div class="input-color">
+                            <span class="input-group-text" id="addon-wrapping-3" style="margin-bottom: 5px">Màu sắc:</span>
+                            <input type="text" name="color" id="edit__color" class="form-control" aria-label="Username" aria-describedby="addon-wrapping" minlength="2" required="required">
+                            <p id="empty__edit__color" class="check__empty">Vui lòng nhập màu sản phẩm</p>
+                        </div>
+
+                        <div class="input-stock">
+                            <span class="input-group-text" id="addon-wrapping-4" style="margin-bottom: 5px">Số lượng:</span>
+                            <input type="number" name="stock" id="edit__quantity" class="form-control" aria-label="Username" aria-describedby="addon-wrapping" min="1" required="required">
+                            <p id="empty__edit__stock" class="check__empty">Vui lòng nhập số lượng sản phẩm</p>
+                        </div>
+
+                        <div id="description" class="input-description">
+                            <span class="input-group-text" id="addon-wrapping-5" style="margin-bottom: 5px">Mô tả sản phẩm:</span>
+                            <textarea name="description" id="descriptionTextarea" class="form-control" aria-label="Username" aria-describedby="addon-wrapping" minlength="10" required="required"></textarea>
+                            <p id="empty__edit__des" class="check__empty">Vui lòng nhập mô tả sản phẩm</p>
+                        </div>
+                    </div>
+                    <div class="wrapper-button">
+                        <button type="button" class="btn btn-second" onclick="closeEditModal(editFormWrapper)">Hủy</button>
+                        <button type="submit" class="btn btn-primary" id="edit__product__btn">Cập nhật</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!--        ADD NEW PRODUCT FORM-->
+        <div class="back-ground-wrapper-add">
+            <div class="adding-form-wrapper">
+                <form class="add-new-form" th:action="@{/admin/save}" method="post" th:object="${Product}" enctype="multipart/form-data">
+                    <h3 class="title-form">Thêm sản phẩm mới</h3>
+                    <div class="header-wrapper">
+                        <div class="wrapper-name">
+                            <span class="input-group-text" id="addon-wrapping-0">Tên sản phẩm:</span>
+                            <input type="text" name="name" id="input__name" class="add-form-control" aria-label="Username" aria-describedby="addon-wrapping" minlength="6" maxlength="100" required="required">
+                            <p id="empty__name" class="check__empty">Vui lòng nhập tên sản phẩm</p>
+                        </div>
+
+                        <div class="wrapper-price">
+                            <span class="input-group-text" id="addon-wrapping-7">Giá:</span>
+                            <input type="number" name="price" id="input__price" class="add-form-control" aria-label="Username" aria-describedby="addon-wrapping" minlength="7" required="required">
+                            <p id="empty__price" class="check__empty">Vui lòng nhập giá sản phẩm</p>
+                        </div>
+
+                        <div class="wrapper-color">
+                            <span class="input-group-text" id="addon-wrapping-8">Màu sắc:</span>
+                            <input type="text" name="color" id="input__color" class="add-form-control" aria-label="Username" aria-describedby="addon-wrapping" minlength="1" required="required">
+                            <p id="empty__color" class="check__empty">Vui lòng nhập màu sản phẩm</p>
+                        </div>
+                        
+						<div class="wrapper-colorId">
+						    <div class="color-picker-group">
+						        <span class="input-group-text" id="addon-wrapping-12">Mã màu:</span>
+						        <input type="color" id="colorPicker" class="color-box" aria-label="Color Picker" aria-describedby="addon-wrapping">
+						    </div>
+						    <input type="text" name="colorID" id="input__color_id" class="add-form-control" aria-label="Username" aria-describedby="addon-wrapping" minlength="1" required="required">
+                            <p id="empty__color" class="check__empty">Vui lòng nhập màu sản phẩm</p>
+						</div>
+						
+						<div class="wrapper-stock">
+                            <span class="input-group-text" id="addon-wrapping-11">Dung lượng:</span>
+                            <input type="text" name="storageCapacity" id="input__storageCapacity" class="add-form-control" aria-label="Username" aria-describedby="addon-wrapping" min="1" required="required">
+                            <p id="empty__stock" class="check__empty">Vui lòng nhập dung lượng sản phẩm</p>
+                        </div>
+						
+						
+						
+						
+                        <div class="wrapper-stock">
+                            <span class="input-group-text" id="addon-wrapping-9">Số lượng:</span>
+                            <input type="number" name="stock" id="input__quantity" class="add-form-control" aria-label="Username" aria-describedby="addon-wrapping" min="1" required="required">
+                            <p id="empty__stock" class="check__empty">Vui lòng nhập số lượng sản phẩm</p>
+                        </div>
+                                               
+
+                        <div class="wrapper-image">
+                            <span class="input-group-text" id="addon-wrapping-10">Hình ảnh:</span>
+                            <input type="file" name="img" id="upload-img" style="display: none" class="add-form-control" aria-label="Username" aria-describedby="addon-wrapping" accept="image/jpeg, image/png" required="required">
+                            <label class="upload-btn" id="upload-label" for="upload-img">
+                                Chọn hình ảnh
+                            </label>
+                            <i class="far fa-file-check" id="success-icon"></i>
+                        </div>
+
+                        <div class="wrapper-description">
+                            <span class="input-group-text" id="addon-wrapping-6">Mô tả sản phẩm:</span>
+                            <textarea name="description" id="input__des" class="add-form-control" aria-label="Username" aria-describedby="addon-wrapping" minlength="10" required="required"></textarea>
+                            <p id="empty__des" class="check__empty">Vui lòng nhập mô tả sản phẩm</p>
+                        </div>
+                    </div>
+
+                    <div class="footer-wrapper">
+                        <p id="empty__img" class="check__empty">Vui lòng nhập chọn hình ảnh cho sản phẩm</p>
+                        <div id="wrapper__button__handle">
+                            <button type="button" class="btn btn-second" onclick="closeEditModal(addNewFormWrapper)">Hủy</button>
+                            <button th:href="@{admin/save}" type="submit" class="btn btn-primary" id="add__product__btn">Thêm</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="back-ground-wrapper-confirm">
+            <div class="confirm-form-wrapper">
+                <form th:action="@{'/admin/delete/id='}" id="confirm-form">
+                    <h2 id="header-title">Xác nhận</h2>
+                    <div class="body-wrapper">
+                        <p id="delete__content">Bạn có chắc chắn muốn xóa sản phẩm này không ?</p>
+                    </div>
+                    <div id="footer-wrapper">
+                        <button id="no-btn" type="button" onclick="closeEditModal(confirmDialog)">Không</button>
+                        <button id="yes-btn" type="submit">Có</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" th:src="@{/JS/admin/viewAllProduct.js}"></script>
+</section>
+</body>
+</html>

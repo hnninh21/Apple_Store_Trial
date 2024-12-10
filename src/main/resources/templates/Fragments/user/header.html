@@ -1,0 +1,94 @@
+ <!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{Layouts/user-main.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/assets/css/user/header.css}">
+
+    <link
+            rel="stylesheet"
+            data-purpose="Layout StyleSheet"
+            title="Web Awesome"
+            href="/css/app-wa-a60ddbceb7292f11c9e430d067b1eb9f.css?vsn=d"
+    >
+
+    <link
+            rel="stylesheet"
+            href="https://site-assets.fontawesome.com/releases/v6.5.2/css/all.css"
+    >
+
+    <link
+            rel="stylesheet"
+            href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-thin.css"
+    >
+
+    <link
+            rel="stylesheet"
+            href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-solid.css"
+    >
+
+    <link
+            rel="stylesheet"
+            href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-regular.css"
+    >
+
+    <link
+            rel="stylesheet"
+            href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-light.css"
+    >
+
+</head>
+<body>
+<div th:fragment="header" id="wrapper__header" >
+    <div class="wrap-header">
+        <div class="logo">
+            <a href="/">
+                <img th:src="@{/images/logologoAppleWorld.png}" alt="logo">
+            </a>
+        </div>
+        <div class="right-header">
+            <div class="search-wrap">
+                <form th:action="@{/user/search}" method="get" id="search-form">
+                    <input class="search-input" name="search" type="text" placeholder="Tìm kiếm...">
+                </form>
+<!--                <input type="text" class="search-input">-->
+                <i class="fa-solid fa-magnifying-glass icon search-icon"></i>
+            </div>
+
+            
+            <a th:href="@{/user/shopping-cart}" class="avatar-link" title="Xem giỏ hàng">
+            	<i class="fa-regular fa-cart-shopping icon cart-icon" style="color: #ffffff;"></i>
+            </a>
+            
+            
+			<a th:href="@{/user/purchase_history}" class="avatar-link" title="Xem đơn hàng">
+			    <i class="fa-regular fa-truck icon order-icon" style="color: #ffffff;"></i>
+			</a>
+
+
+<!--            <a th:href="@{/user/customer_info}" class="avatar-link">-->
+            <div class="wrap-action-personal-all">
+                <i class="fa-regular fa-circle-user icon avatar-icon" style="color: #ffffff;"></i>
+                <div class="wrap-action-personal">
+                    <a th:href="@{/user/customer_info}" class="avatar-link"><p>Thông tin cá nhân</p></a>
+                    <a th:href="@{/user/change-password}"><p>Đổi mật khẩu</p></a>
+                    <form th:action="@{/logout}" method="POST" id="logout-form">
+                        <p onclick="clickLogout()" style="cursor: pointer">Đăng xuất</p>
+                    </form>
+                </div>
+            </div>
+<!--            </a>-->
+        </div>
+    </div>
+
+<script>
+    function clickLogout(){
+        document.getElementById('logout-form').submit()
+    }
+</script>
+</div>
+</body>
+</html>

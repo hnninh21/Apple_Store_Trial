@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" layout:decorate="~{Layouts/user-main.html}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi tiết sản phẩm</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/assets/css/user/product_detail.css}" type="text/css">
+    
+    <style>
+        .toast {
+		    position: fixed;
+		    top: 20px; /* Vị trí từ trên xuống */
+		    right: 20px; /* Vị trí từ bên phải */
+		    background-color: #28a745; /* Màu xanh cho thông báo thành công */
+		    color: white; /* Màu chữ trắng */
+		    padding: 15px 30px; /* Khoảng cách bên trong */
+		    border-radius: 5px; /* Bo tròn góc */
+		    z-index: 1050; /* Đảm bảo nó nằm trên các phần tử khác */
+		    transition: opacity 0.5s ease; /* Hiệu ứng mờ dần */
+		    opacity: 0; /* Mặc định là không hiển thị */
+		}
+		.toast.visible {
+		    opacity: 1; /* Hiển thị khi thêm lớp 'visible' */
+		}
+    </style>
+</head>
+<body>
+<section layout:fragment="content">
+    <ul class="breadcrumb-prod-detail">
+        <li><a th:href="@{/user/}">Trang chủ</a> <span class="delimiter">></span></li>
+        <li th:text="${productDto.name}"></li>
+    </ul>        
+    
+    <div class="wrap-prod-detail">
+        <div class="product-detail-container">
+            <div class="product-detail-wrap-image">
+				<img style="max-height:100%; width: 570px; height: 560px;" th:src="'data:image/jpeg;base64,' + ${productDto.img}"/>
+            </div>
+            <div class="product-info">
+			    <h1 th:text="${productDto.name}" class="pro-detail-name"></h1>
+			    <span th:text="${productDto.price}" class="pro-detail-price"></span>
+			    <hr>
+			    <p><strong>Còn lại:</strong> <span th:text="${productDto.stock}" class="pro-detail-stock"></span> chiếc</p>
+			    <!-- Toast thông báo -->
+				<div id="toast" class="toast" style="display: none;">
+				    <span th:text="${message}"></span>
+				</div>
+			    
+			    <div class="color-options">
+				    <p><strong>Chọn màu:</strong></p>
+				    <div th:each="colorDto : ${colorDtos}" class="color-option">
+				        <a th:href="@{/user/product_detail(product_id=${productDto.product_id}, color=${colorDto.color})}"
+				           class="color-button"
+				           th:classappend="${colorDto.color == productDto.color} ? 'active' : ''"
+				           th:title="${colorDto.color}">
+				            <span class="color-circle" th:style="'background-color:' + ${colorDto.colorId} + ';'"></span>
+				            <span class="color-name" th:text="${colorDto.color}"></span>
+				        </a>
+				    </div>
+				</div>
+			    <p><strong>Mô tả:</strong></p>
+			    <p class="pro-detail-descript" th:text="${productDto.description}"></p>
+			    <hr>
+			    
+			    <div class="wrap-action-pro-detail-btn">
+			        <button class="buy-now-button" data-bs-toggle="modal" data-bs-target="#confirmation-modal">Mua ngay</button>
+			        
+			        <form th:action="@{/user/addToCart}" method="post" >
+			        	<input type="hidden" th:value="${productDto.product_id}" name="product_id">		        	
+			        	<button type="submit" class="add-to-cart-button" > 
+				        	<i class="fa fa-shopping-cart"></i><br>        	
+				        	Thêm vào giỏ hàng
+			        	</button>
+					</form>
+
+			    </div>
+			</div>
+
+        </div>
+    </div>
+    
+    
+    
+
+    
+    <!-- Modal xác nhận đơn hàng -->
+    <div class="modal fade" id="confirmation-modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title">Xác nhận đơn hàng</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-body">
+	            <form th:action="@{/user/checkout}" method="post" >
+	                <div>
+	                    <h2>Thông tin sản phẩm</h2>
+	                    
+	                    <p><strong>Tên sản phẩm:</strong></p>
+	                    <div class="info-box">
+	                        <p id="productName" class="data-value"><span th:text="${productDto.name}"></span></p>
+	                    </div>
+	                    
+	                    <p><strong>Màu sắc:</strong></p>
+	                    <div class="info-box">
+	                        <p id="productColor" class="data-value"><span th:text="${productDto.color}"></span></p>
+	                    </div>
+	                    
+	                    <p><strong>Trị giá:</strong></p>
+	                    <div class="info-box">
+	                        <p id="productPrice" class="data-value"><span th:text="${productDto.price}"></span></p>
+	                    </div>
+	                    
+	                    <input type="hidden" th:value="${productDto.product_id}" id="product_id" name="product_id">
+	                </div>
+	                <div class="customer-info">
+	                    <h2 class="customer-title">Thông tin khách hàng</h2>
+	                    <div th:if="${customerDto != null}" class="customer-details">
+	                        <p><strong>Địa chỉ nhận hàng:</strong></p>
+	                        <div class="info-box">
+	                            <p id="customerAddress" class="data-value">
+	                                <span th:text="${customerDto.address_line}"></span>,
+	                                <span th:text="${customerDto.city}"></span>,
+	                                <span th:text="${customerDto.country}"></span>
+	                            </p>
+	                        </div>
+	                    
+	                        <p><strong>Số điện thoại:</strong></p>
+	                        <div class="info-box">
+	                            <p id="customerPhone" class="data-value"><span th:text="${customerDto.phone}"></span></p>
+	                        </div>
+	                        <div class="modal-footer">
+				                <button type="button" class="btn btn-secondary btn-lg" data-bs-dismiss="modal">Hủy</button>
+				                <button type="submit" class="btn btn-primary btn-lg">Mua hàng</button>
+			           	 	</div>
+	                    </div>
+	                    <div th:if="${customerDto == null}" class="customer-details">
+	                    	
+	                        
+	                        <a th:href="@{/user/customer_info}" class="btn btn-primary">Nhập thông tin khách hàng</a>
+	                        
+	                        <div class="modal-footer">
+	                        	<button type="button" class="btn btn-secondary btn-lg" data-bs-dismiss="modal">Hủy</button>
+	                        </div>
+	                    </div>
+	                </div>
+	                
+	                
+	            </form>    
+	            </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+    <script>
+    	
+	    document.addEventListener("DOMContentLoaded", function() {
+	        const toast = document.getElementById("toast");
+	        
+	        // Kiểm tra nếu có thông báo từ model
+	        console.log("Message: ", toast.innerText.trim()); // Kiểm tra thông báo
+	        if (toast && toast.innerText.trim() !== "") {
+	            toast.style.display = "block"; // Hiển thị thông báo
+	            toast.classList.add("visible"); // Thêm lớp 'visible'
+	            
+	            // Ẩn thông báo sau 2 giây
+	            setTimeout(() => {
+	                toast.classList.remove("visible"); // Ẩn thông báo
+	                setTimeout(() => {
+	                    toast.style.display = "none"; // Ẩn hoàn toàn
+	                }, 500); // Thời gian ẩn hoàn toàn
+	            }, 2000); // Thời gian hiển thị (2000ms = 2 giây)
+	        }
+	    });
+	    	
+        function goBack() {
+            window.history.back();
+        }
+        
+        const selectedColor = encodeURIComponent(color); // Mã hóa giá trị màu
+        const url = `/product_detail?product_id=${productId}&color=${selectedColor}`;
+		
+        
+    </script>
+</section>
+</body>
+</html>

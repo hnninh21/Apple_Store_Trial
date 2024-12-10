@@ -1,0 +1,98 @@
+<!DOCTYPE html
+       >
+<html lang="en"
+		xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{Layouts/admin-main.html}"
+      >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang chủ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/assets/css/layout/header.css}" type="text/css">
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+</head>
+<body>
+    <div th:fragment="header" style="height: 60px" id="wrapper__header" >
+        <div id="wrapper__logo__manage">
+            <div id="wrapper__logo">
+                <a href="/admin/viewAll">
+                <img th:src="@{../../images/logologoAppleWorld.png}" style="height: 40px">
+                </a>
+            </div>
+            <div id="wrapper__manage">
+                <a th:href="viewAll" class="link__to__view">
+                    <div id="wrapper__manage__product" class="manage__item">
+                        <h3 class="manage__name" id="manage__product">Sản phẩm</h3>
+                    </div>
+                </a>
+                <a th:href="viewAllOrder" class="link__to__view">
+                    <div id="wrapper__manage__order" class="manage__item">
+                        <div id="content">
+                            <h3 class="manage__name" id="manage__order">Đơn hàng</h3>
+                        </div>
+                        <div id="dropdown__list">
+                            <i class="fas fa-caret-down" id="dropdown__icon"></i>
+                            <div id="wrapper__dropdown">
+                                <a class="dropdown__item" th:href="notApproved">
+                                    <div>
+                                        Đơn hàng chờ duyệt
+                                    </div>
+                                </a>
+                                <a class="dropdown__item" th:href="isApproved">
+                                    <div>
+                                        Đơn hàng đã duyệt
+                                    </div>
+                                </a>
+                                <a class="dropdown__item" th:href="delivered">
+                                    <div>
+                                        Đơn hàng đã giao
+                                    </div>
+                                </a>
+                                <a class="dropdown__item" th:href="canceled">
+                                    <div>
+                                        Đơn hàng đã hủy
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a th:href="statistic" class="link__to__view">
+                    <div id=" " class="manage__item">
+                        <h3 class="manage__name" id="">Thống kê</h3>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+
+        <div id="logout__background">
+            <div id="wrapper__logout__btn">
+                <i class="fas fa-sign-out-alt" id="logout__icon"></i>
+            </div>
+            <div id="outside__logout__form">
+                <form th:action="@{/logout}" method="POST" id="logout__form">
+                    <div>
+                        <h4 id="title__logout">Xác nhận</h4>
+                    </div>
+                    <div>
+                        <p id="content__logout">Bạn có chắc chắn muốn đăng xuất ?</p>
+                    </div>
+                    <div id="handle">
+                        <button type="button" id="cancel__logout__btn">Hủy</button>
+                        <button type="submit" id="confirm__logout__btn">Đăng xuất</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+    <script th:src="@{/JS/header.js}"></script>
+</body>
+</html>

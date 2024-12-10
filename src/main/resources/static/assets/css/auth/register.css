@@ -1,0 +1,228 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    font-variation-settings: "slnt" 0;
+}
+
+.container {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#background__img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: -1;
+}
+
+.wrapper__title__register {
+    width: 100%;
+    text-align: center;
+}
+
+#title__register {
+    font-weight: bold;
+}
+
+#redirect__login {
+    background-color: #0A6847FF;
+    text-decoration: none;
+    color: white;
+    border-radius: 20px;
+    margin-left: 8px;
+    text-align: center;
+    transition: all 0.2s ease-in-out
+}
+
+#redirect__login > i {
+    padding: 8px 12px;
+}
+
+#redirect__login:hover {
+    opacity: 0.9;
+    scale: 1.1;
+}
+
+#redirect__login__fail {
+    background-color: #ff0000;
+    text-decoration: none;
+    color: white;
+    border-radius: 20px;
+    margin-left: 8px;
+    text-align: center;
+    transition: all 0.2s ease-in-out
+}
+
+#redirect__login__fail > i {
+    padding: 8px 12px;
+}
+
+#redirect__login__fail:hover {
+    opacity: 0.9;
+    scale: 1.1;
+}
+
+#wrapper__content__notice {
+    margin-right: 8px;
+    font-weight: 500;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+#wrapper__content__notice__fail {
+    margin-right: 8px;
+    font-weight: 500;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+#check__icon {
+    font-size: 30px;
+}
+#check__icon__fail {
+    font-size: 30px;
+    margin:0 10px;
+}
+
+.successful__register {
+    background-color: #E0FBE2;
+    text-align: center;
+    padding: 6px 0;
+    border-radius: 50px;
+    color: #0A6847;
+    font-weight: 500;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.fail__register {
+    background-color: #fbe0e0;
+    text-align: center;
+    padding: 6px 0;
+    border-radius: 50px;
+    color: #c56c6c;
+    font-weight: 500;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+p {
+    font-size: 14px;
+    color: #FF6868;
+    opacity: 0;
+    height: 8px;
+    transition: all 0.2s ease-in-out;
+}
+
+.outside__register__form {
+    width: 500px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+}
+
+.wrapper__register__form {
+    background-color: #ffffff;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 80%;
+    padding: 20px 0;
+}
+
+.each__field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+input {
+    padding: 10px 15px;
+    font-size: 16px;
+    border: 2px solid #ececec;
+    border-radius: 50px;
+    width: 100%;
+}
+
+label {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+#wrapper__input__password {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border: 2px solid #ececec;
+    border-radius: 50px;
+}
+
+#input__password {
+    width: 85%;
+    border: none;
+    outline: none;
+}
+
+#show__hide__reg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 15%;
+}
+
+#show__password__reg, #hide__password__reg {
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+#register__form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#register__btn {
+    border: none;
+    padding: 14px 0;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 18px;
+    cursor: pointer;
+    background-color: #000000;
+    color: white;
+    transition: all 0.2s ease-in-out;
+    margin-top: 6px;
+}
+
+#register__btn:hover {
+    opacity: 0.9;
+    scale: 1.02;
+}

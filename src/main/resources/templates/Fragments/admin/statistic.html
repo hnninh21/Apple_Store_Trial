@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{Layouts/admin-main.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Thống kê</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+    <link rel="stylesheet" th:href="@{/assets/css/admin/statistic.css}" type="text/css">
+    <script src="https://unpkg.com/currency.js@~2.0.0/dist/currency.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <link
+            rel="stylesheet"
+            href="https://site-assets.fontawesome.com/releases/v5.15.4/css/all.css"
+    >
+</head>
+<body>
+<section layout:fragment="content">
+    <div id="statistic_Title">
+        <h1 id="content__Title">Thống kê</h1>
+    </div>
+    <div class="container mt-5">
+        <div class="row">
+            <!-- Total Customers -->
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm bg-white rounded">
+                    <div class="card-body text-center">
+                        <i class="fas fa-user fa-3x mb-3"></i>
+                        <h5 class="card-title">Tổng số khách hàng</h5>
+                        <h3 class="card-text">[[${totalCustomers}]]</h3>
+                    </div>
+                </div>
+            </div>
+            <!-- Total Products -->
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm bg-white rounded">
+                    <div class="card-body text-center">
+                        <i class="fas fa-box fa-3x mb-3"></i>
+                        <h5 class="card-title">Tổng số sản phẩm</h5>
+                        <h3 class="card-text">[[${totalProducts}]]</h3>
+                    </div>
+                </div>
+            </div>
+            <!-- Products Sold -->
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm bg-white rounded">
+                    <div class="card-body text-center">
+                        <i class="fas fa-shopping-cart fa-3x mb-3"></i>
+                        <h5 class="card-title">Sản phẩm đã bán</h5>
+                        <h3 class="card-text">[[${totalProductsSold}]]</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Form chọn tháng -->
+        <div class="mb-4">
+            <div class="card shadow-sm bg-white rounded">
+                <div class="card-body">
+                    <h5 class="card-title">Doanh thu theo tháng</h5>
+                    <form th:action="@{/admin/statistic}" method="get" class="row g-3">
+                        <div class="col-md-4">
+                            <label for="month" class="form-label">Tháng</label>
+                            <select class="form-select" id="month" name="month" required>
+                                <option value="" selected>Chọn tháng</option>
+                                <option th:each="m : ${#numbers.sequence(1,12)}"
+                                        th:value="${m}"
+                                        th:text="${m}"></option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="year" class="form-label">Năm</label>
+                            <select class="form-select" id="year" name="year" required>
+                                <option value="" selected>Chọn năm</option>
+                                <option th:each="y : ${years}"
+                                        th:value="${y}"
+                                        th:text="${y}"></option>
+                            </select>
+                        </div>
+                        <div class="col-md-4 align-self-end">
+                            <button type="submit" class="btn btn-primary">Xem Doanh Thu</button>
+                        </div>
+                    </form>
+                    <!-- Hiển thị doanh thu -->
+                    <div class="mt-4" th:if="${monthlyRevenue != null}">
+                        <h5 class="card-title">Doanh thu tháng [[${selectedMonth}]]/[[${selectedYear}]]</h5>
+                        <h3 class="card-text">[[${monthlyRevenue}]] VND</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+</body>
+</html>

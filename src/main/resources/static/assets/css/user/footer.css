@@ -1,0 +1,40 @@
+.wrap-footer{
+    height: 180px;
+    border: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #000000;
+    color: white;
+    margin: 10px;
+    max-width: 100%;
+    border-radius: 20px;
+}
+
+.flex-item{
+    margin: 0 24px;
+}
+.flex-1{
+    flex: 1;
+}
+.flex-2{
+    flex: 2;
+}
+.flex-4{
+    flex: 4;
+}
+.ath-img{
+    width: 126px;
+    height: 67px;
+}
+.wrap-img{
+    display: flex;
+    align-items: center;
+
+}
+/*.p-cus{*/
+/*    width: 440px;*/
+/*}*/
+
+
+

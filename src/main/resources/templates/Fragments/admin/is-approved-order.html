@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{Layouts/admin-main.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Đơn hàng đã duyệt</title>
+    <link rel="stylesheet" href="../../../static/assets/css/admin/is-approved-order.css">
+    <link rel="stylesheet" th:href="@{/assets/css/admin/is-approved-order.css}" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+    <script src="https://unpkg.com/currency.js@~2.0.0/dist/currency.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+<body>
+    <section layout:fragment="content">
+        <div id="wrapper__body">
+            <div id="wrapper__title">
+                <h1 id="content__title">Danh sách đơn hàng đã duyệt</h1>
+            </div>
+
+            <div class="container-fluid" id="wrapper__table__product">
+                <div th:if="${listIsApproved.size() == 0}" id="wrapper__empty__list">
+                    <h3 id="empty__list">Danh sách trống</h3>
+                </div>
+                <div th:unless="${listIsApproved.size() == 0}">
+                    <table id="detailOrderTable" class="table">
+                        <thead>
+                        <tr id="header__row">
+                            <th>ID</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Màu sắc</th>
+                            <th>Giá</th>
+                            <th>Khách hàng</th>
+                            <th>Số điện thoại</th>
+                            <th>Địa chỉ</th>
+                            <th>Ngày đặt</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <th:block th:each="order : ${listIsApproved}">
+                            <tr>
+                                <td th:text="${order.getOrder_id()}"></td>
+                                <td th:text="${order.getProduct_name()}"></td>
+                                <td th:text="${order.getProduct_color()}"></td>
+                                <td id="priceField" th:text="${order.getPrice()}"></td>
+                                <td th:text="${order.getCustomer_f_name()} + ' ' + ${order.getCustomer_l_name()}"></td>
+                                <td th:text="${order.getPhone()}"></td>
+                                <td th:text="${order.getAddress_line()} +', ' + ${order.getCity()} + ', ' + ${order.getCountry()}"></td>
+                                <td th:text="${order.getOrder_date()}"></td>
+                                <td id="wrapper__handle">
+                                    <button class="wrapper__accept__icon" th:data-id="${order.getOrder_id()}">
+                                        <i class="fas fa-truck"></i>
+                                    </button>
+                                    <button class="wrapper__delete__icon" th:data-id="${order.getOrder_id()}">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </th:block>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="wrapper__delivered__order">
+                <div class="delivered__order">
+                    <div class="wrapper__title">
+                        <h5>Xác nhận đơn hàng</h5>
+                    </div>
+                    <div class="wrapper__content">
+                        <h6 id="content__modal">Bạn có chắc chắn đã giao đơn hàng này ?</h6>
+                    </div>
+                    <div class="wrapper__reason">
+                        <label for="input__reason">Lí do giao hàng thất bại</label>
+                        <textarea id="input__reason" name="reason" required="required"></textarea>
+                        <h6 id="miss__reason">Vui lòng nhập lý do hủy đơn hàng</h6>
+                    </div>
+                    <form class="delivered__order__form">
+                        <div class="cancel__btn">
+                            <button type="button">Hủy</button>
+                        </div>
+                        <div class="confirm__btn">
+                            <button type="submit" id="accept">Xác nhận</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+        <script th:src="@{/JS/admin/is-approved-order.js}"></script>
+
+    </section>
+</body>
+</html>

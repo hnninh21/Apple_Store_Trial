@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{Layouts/user-main.html}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh sách sản phẩm</title>
+    <link rel="stylesheet" th:href="@{/assets/css/user/products.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/assets/css/base.css}" type="text/css">
+
+
+    <link
+            rel="stylesheet"
+            data-purpose="Layout StyleSheet"
+            title="Web Awesome"
+            href="/css/app-wa-462d1fe84b879d730fe2180b0e0354e0.css?vsn=d"
+    >
+
+    <link
+            rel="stylesheet"
+            href="https://site-assets.fontawesome.com/releases/v5.15.4/css/all.css"
+    >
+
+<!--    <script src="/JS/viewAllProduct.js"></script>-->
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+</head>
+<body>
+<section layout:fragment="content">
+    <button id="scrollToSectionBtn" onclick="scrollToSection()"><i class="fa-solid fa-arrow-up icon"></i></button>
+    <div class="wrap-prod-page">
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="5"></li>
+
+            </ol>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img class="d-block w-100" th:src="@{/images/slider1.png}" alt="First slide">
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block w-100" th:src="@{/images/slider2.png}" alt="Second slide">
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block w-100" th:src="@{/images/slider3.png}" alt="Third slide">
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block w-100" th:src="@{/images/slider4.png}" alt="Fourth slide">
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block w-100" th:src="@{/images/slider5.png}" alt="Fifth slide">
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+        <ul class="breadcrumb">
+            <li>
+                <a th:href="@{/user/}">Trang chủ</a>
+                <span class="delimiter">></span>
+            </li>
+            <li>Search</li>
+        </ul>
+        <div class="search-key">
+            <h1 th:text="'Kết quả tìm kiếm của &quot;' + ${searchKey} + '&quot;'"></h1>
+        </div>
+        <div class="wrap-prod">
+            <div class="toolbar">
+                <div class="funtionsBar">
+                    <form th:action="@{/user/search}" method="get" id="sort-form">
+                        <div class="sort">
+                            <label class="sortLabel" for="comboBox">Sắp xếp theo</label>
+                            <select id="comboBox" name="price">
+                                <option value="">      Chọn</option>
+                                <option value="asc">Giá tăng dần</option>
+                                <option value="desc">Giá giảm dần</option>
+                            </select>
+                        </div>
+                        <input name="search" type="hidden" th:value="${searchKey}">
+                    </form>
+
+                    <div class="filterColor">
+                        <form class="colorComboBoxForm" th:action="@{/user/search}" method="get">
+                            <label class="colorComboBoxLabel" th:for="options">Lọc theo màu</label>
+                            <select name="color" id="colorComboBox">
+                                <option value="">Chọn màu</option>
+                                <th:block th:each="color : ${listColor}" >
+                                    <option th:value="${color}">[[${color}]]</option>
+                                </th:block>
+                            </select>
+                            <input name="search" type="hidden" th:value="${searchKey}">
+                            <button class="filterColorBtn" type="submit"><i class="far fa-filter" style="font-size: 20px; color: white"></i></button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+<!--            <div class="product-container">-->
+<!--                &lt;!&ndash; Kiểm tra xem danh sách có khác null và không rỗng &ndash;&gt;-->
+<!--                <div th:if="${resultSearchList != null and not #lists.isEmpty(resultSearchList)}">-->
+<!--                    &lt;!&ndash; Product Boxes &ndash;&gt;-->
+<!--                    <div th:each="product : ${resultSearchList}" class="product-box">-->
+<!--                    <a class="product-box-a" th:href="@{/user/product_detail(product_id=${product.getProduct_id()})}">-->
+<!--                        <div class="product-image">-->
+<!--                            <img th:src="@{/images/img_1.png}" alt="">-->
+<!--                        </div>-->
+<!--                        <div class="content-product-box">-->
+<!--                            <h2 class="product-name" th:text="${product.getName()}"></h2>-->
+<!--                            <p class="product-price" th:text="${product.getPrice()}"></p>-->
+<!--                        </div>-->
+<!--                    </a>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            &lt;!&ndash; Hiển thị thông báo nếu không tìm thấy kết quả phù hợp &ndash;&gt;-->
+<!--            <div th:unless="${resultSearchList != null and not #lists.isEmpty(resultSearchList)}" class="not-found-wrap">-->
+<!--                <p class="not-found-text">Không tìm thấy kết quả phù hợp</p>-->
+<!--            </div>-->
+<!--        </div>-->
+
+
+<!--            <div class="product-container">-->
+                <div th:if="${resultSearchList != null and not #lists.isEmpty(resultSearchList)}" class="product-container">
+                <div class="product-box" th:each="product : ${resultSearchList}">
+                    <a class="product-box-a" th:href="@{/user/product_detail(product_id=${product.getProduct_id()})}">
+                        <div class="product-image">
+                                                        <img th:src="'data:image/jpeg;base64,' + ${product.getImg()}"/>
+<!--                            <img th:src="@{/images/img_1.png}" alt="">-->
+                        </div>
+                        <div class="content-product-box">
+                            <h2 class="product-name" th:text="${product.getName()}">
+                            </h2>
+                            <p class="product-price" th:text="${product.getPrice()}">
+                            </p>
+                        </div>
+                    </a>
+                </div>
+
+
+            </div>
+            <div th:unless="${resultSearchList != null and not #lists.isEmpty(resultSearchList)}" class="not-found-wrap product-container">
+                <p class="not-found-text">Không tìm thấy kết quả phù hợp</p>
+            </div>
+<!--            </div>-->
+
+    </div>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script>
+
+    </script>
+    <script th:src="@{/JS/user/search-prod.js}"></script>
+</section>
+</body>
+</html>

@@ -1,0 +1,377 @@
+        .wrap {
+            display: flex;
+            flex-wrap: wrap;
+            border: #fff 2px solid;
+            border-radius: 10px;
+            margin: 20px 350px;
+            background-color: #fff;
+            justify-content: center;
+            position: relative;
+            
+            
+        }
+        .order-container {
+            background-color: #fff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            width: 1000px;
+            max-width: 100%;
+            max-height: 120vh; /* Đặt chiều cao tối đa cho container */
+            display: flex;
+            flex-direction: column;
+        }
+        .order-header {
+            background-color: #000;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            white-space: nowrap; /* Ngăn chữ xuống dòng */
+        }
+        .order-header h1 {
+            margin: 0;
+            font-size: 32px;
+        }
+        .order-list {
+            padding: 20px;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+        .order-item {
+            background-color: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            border-left: 25px solid #000;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        .order-item img {
+            width: 150px;
+            height: 200px;
+            border-radius: 5px;
+            object-fit: cover;
+            margin-right: 20px;
+        }
+        .order-item h2 {
+            margin-top: 0;
+            font-size: 24px;
+            color: #333;
+        }
+        .order-item p {
+            margin: 5px 0;
+            font-size: 18px;
+            color: #555;
+        }
+        .delete-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            color: #e74c3c;
+        }
+        .order-footer {
+            display: flex;
+            justify-content: left;
+            padding: 40px ;
+        }
+        .back-button {
+            background-color: #6c757d;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .back-button:hover {
+            background-color: #5a6268;
+        }
+        
+        .wrap-tools {
+            display: flex;
+            flex-wrap: wrap;
+            border: #fff 2px solid;
+            border-radius: 10px;
+            margin: 20px;
+            background-color: #fff;
+            justify-content: left;
+            position: relative;
+        }
+        
+        .toolbar {
+            width: 100%;
+            display: flex;
+            justify-content: flex-start;
+        }
+        .funtionsBar {
+            margin-top: 20px;
+            margin-left: 100px;
+            display: flex;
+            flex-direction: row;
+            float: left;
+        }
+        
+        .sort {
+            display: flex;
+            flex-wrap: nowrap;
+            background-color: #EEEEEE;
+            white-space: nowrap;
+            justify-content: space-evenly;
+            align-items: center;
+            width: 240px;
+            height: 50px;
+            border-radius: 50px;
+            overflow: unset;
+            margin-right: 20px;
+            border: 2px solid #dddddd;
+            padding-left: 10px;
+        }
+        
+        #comboBox {
+            padding: 10px 5px;
+            border-radius: 50px;
+            outline-color: #032D3C;
+            border-style: none;
+        }
+        
+        .filterStatus {
+            display: flex;
+            background-color: #eeeeee;
+            align-items: center;
+            justify-content: center;
+            width: 340px;
+            height: 50px;
+            border-radius: 50px;
+            border: 2px solid #dddddd;
+        }
+        
+        .StatusComboBoxLabel {
+            margin-left: 10px;
+        }
+        
+        .StatusComboBoxForm {
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+            align-items: center;
+            white-space: nowrap;
+            overflow: initial;
+            width: 100%;
+        }
+        
+        #StatusComboBox {
+            padding: 10px 10px;
+            border-radius: 50px;
+            outline-color: #032D3C;
+            border-style: none;
+            width: 110px;
+        }
+        
+        .filterStatusBtn {
+            border-radius: 50%; 
+	        width: 40px; 
+	        height: 40px; 
+	        display: flex;
+	        align-items: center;
+	        justify-content: center;
+	        background-color:  #fff; /* Màu nền của nút */
+	        border: none; /* Xóa viền mặc định */
+	        cursor: pointer; /* Thay đổi con trỏ khi hover */
+            
+        }
+        
+        .wrap {
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .order-container {
+            background-color: #fff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            width: 1000px;
+            max-width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .order-item {
+            background-color: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .order-item img {
+            width: 150px;
+            height: 200px;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+
+        .order-item div {
+            flex-grow: 1;
+            margin-left: 20px;
+        }
+
+        .order-item button {
+            background-color: #ff5722;
+            color: white;
+            border: none;
+            padding: 7px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .order-item button:hover {
+            background-color: #e64a19;
+        }
+
+        .modal {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        /* Cửa sổ đánh giá */
+        .modal-content {
+            background-color: white;
+            width: 500px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            text-align: left;
+        }
+
+        .modal-header {
+            background-color: #f5f5f5;
+            padding: 15px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .product-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+        }
+
+        .product-info img {
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+
+        .product-details h3 {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .product-details p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: gray;
+        }
+        
+        
+        
+        .product-review {
+		    display: flex;
+		    align-items: center;
+		    gap: 15px;
+		    padding: 15px;
+		}
+		
+		.stars {
+		    font-size: 30px;
+		    color: lightgray;
+		    cursor: pointer;
+		}
+		
+		.stars .star:hover,
+		.stars .star.selected {
+		    color: gold;
+		}
+		
+		.rating-text {
+		    font-size: 14px;
+		    font-weight: bold;
+		    margin-left: 15px;
+		    color: #333;
+		}
+
+
+        .textarea-container {
+            padding: 0 15px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            resize: none;
+        }
+
+        /* Nút điều hướng */
+        .modal-footer {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            background-color: #f5f5f5;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-back {
+            background-color: #ddd;
+            color: black;
+        }
+
+        .btn-submit {
+            background-color: #ff5722;
+            color: white;
+        }
+
+        .btn-submit:hover {
+            background-color: #e64a19;
+        }         
+        
+        .toast {
+		    position: fixed;
+		    top: 20px; /* Vị trí từ trên xuống */
+		    right: 20px; /* Vị trí từ bên phải */
+		    background-color: #28a745; /* Màu xanh cho thông báo thành công */
+		    color: white; /* Màu chữ trắng */
+		    padding: 15px 30px; /* Khoảng cách bên trong */
+		    border-radius: 5px; /* Bo tròn góc */
+		    z-index: 1050; /* Đảm bảo nó nằm trên các phần tử khác */
+		    transition: opacity 0.5s ease; /* Hiệu ứng mờ dần */
+		    opacity: 0; /* Mặc định là không hiển thị */
+		}
+		.toast.visible {
+		    opacity: 1; /* Hiển thị khi thêm lớp 'visible' */
+		}   

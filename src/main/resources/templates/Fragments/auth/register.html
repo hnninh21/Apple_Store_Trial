@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Đăng kí</title>
+    <meta charset="UTF-8">
+<!--    <link rel="stylesheet" type="text/css" href="../../../static/assets/css/auth/register.css">-->
+    <link rel="stylesheet" th:href="@{/assets/css/auth/register.css}" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+</head>
+<body>
+    <div class="container">
+        <img id="background__img" th:src="@{/images/appleLogoReg.jpg}" alt="background">
+<!--        <img id="background__img" src="/static/images/appleLogoReg.jpg" alt="background">-->
+        <div class="outside__register__form">
+            <div class="wrapper__register__form">
+                <div class="wrapper__title__register">
+                    <h3 id="title__register">ĐĂNG KÍ TÀI KHOẢN</h3>
+                </div>
+                <div th:if = "${param.success}" class="successful__register">
+                    <a th:href="@{/login}" id="redirect__login">
+                        <i class="fas fa-chevron-left"></i>
+                    </a>
+                    <div id="wrapper__content__notice">
+                        Đăng kí thành công
+                        <i class="far fa-check-circle" id="check__icon"></i>
+                    </div>
+                </div>
+                <div th:if = "${param.fail}" class="fail__register">
+                    <a th:href="@{/login}" id="redirect__login__fail">
+                        <i class="fas fa-chevron-left"></i>
+                    </a>
+                    <div id="wrapper__content__notice__fail">
+                        Đăng kí thất bại, email đã tồn tại!
+                        <i class="far fa-times-circle" id="check__icon__fail"></i>
+                    </div>
+                </div>
+                <form method="POST" th:action="@{/register}" th:object="${user}" id="register__form">
+                    <div class="each__field">
+                        <label>Họ và tên lót</label>
+                        <input
+                                id="input__last__name"
+                                type="text"
+                                class="form-control"
+                                placeholder="Nguyễn Văn..."
+                                th:field="*{l_name}">
+                        <p id="reg__last__name">Vui lòng nhập họ và tên lót</p>
+                    </div>
+                    <div class="each__field">
+                        <label>Tên</label>
+                        <input
+                                id="input__first__name"
+                                type="text"
+                                class="form-control"
+                                placeholder="A"
+                                th:field="*{f_name}">
+                        <p id="reg__first__name">Vui lòng nhập tên</p>
+                    </div>
+                    <div class="each__field">
+                        <label>Tên người dùng</label>
+                        <input
+                                id="input__username"
+                                type="text"
+                                class="form-control"
+                                placeholder="nguyenvana"
+                                th:field="*{username}">
+                        <p id="reg__username">Vui lòng nhập tên người dùng</p>
+                    </div>
+                    <div class="each__field">
+                        <label>Mật khẩu</label>
+                        <div id="wrapper__input__password">
+                            <input
+                                    id="input__password"
+                                    type="password"
+                                    class="form-control"
+                                    placeholder="*****"
+                                    th:field="*{password}">
+                            <div id="show__hide__reg">
+                                <i class="fas fa-eye" id="show__password__reg"></i>
+                                <i class="fas fa-eye-slash" id="hide__password__reg" style="display: none"></i>
+                            </div>
+                        </div>
+                        <p id="reg__password">Vui lòng nhập mật khẩu</p>
+                    </div>
+
+                    <div class="each__field">
+                        <label>Email</label>
+                        <input
+                                id="input__email"
+                                type="text"
+                                class="form-control"
+                                placeholder="nva@gmail.com"
+                                th:field="*{gmail}">
+                        <p id="reg__email"></p>
+                    </div>
+                    <button type="submit" id="register__btn" disabled style="opacity: 0.5;">Đăng kí</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script th:src="@{/JS/auth/register.js}"></script>
+</body>
+</html>
